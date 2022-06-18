@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssafy.happyhouse.dao.Answer">
+	<insert id="insert">
+		insert into answer (boardno, userid, content)
+		values (#{boardno}, #{userid}, #{content})
+	</insert>
+	
+	<update id="update">
+		update answer
+		set content=#{content}, regtime=now()
+		where no=#{no}
+	</update>
+	
+	<delete id="delete">
+		delete from answer
+		where no=#{no}
+	</delete>
+	
+	<select id="select" resultType="AnswerDto">
+		select *
+		from answer
+		where boardno=#{boardno}
+		order by regtime
+	</select>
+	
+</mapper>

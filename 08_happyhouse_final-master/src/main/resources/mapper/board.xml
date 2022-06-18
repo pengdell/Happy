@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssafy.happyhouse.dao.Board">
+	<insert id="insert">
+		insert into board (no, userid, subject, content)
+		values (#{no},#{userid},#{subject},#{content})
+	</insert>
+
+	<update id="update">
+		update board
+		set userid=#{userid}, subject=#{subject},
+		content=#{content}, regtime=now()
+		where no=#{no}
+	</update>
+
+	<delete id="delete">
+		delete from board
+		where no=#{no}
+	</delete>
+
+	<select id="select" resultType="BoardDto">
+		select *
+		from board
+		where no=#{no}
+	</select>
+
+	<select id="selectAll" resultType="BoardDto">
+		select *
+		from board
+		order by regtime desc
+	</select>
+	
+</mapper>
+
+
+
+

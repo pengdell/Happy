@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ssafy.happyhouse.dao.AptDeal">
+	<insert id = "insert">
+		insert into aptdeal (거래금액, 건축년도, 법정동, 아파트, 년, 월, 일, 전용면적, 지번, 지역코드, 층)
+		values (#{price_deal},#{buildYear},#{dong},#{aptName},#{deal_year},#{deal_month},#{deal_day},#{exclusivePrivateArea},#{jiNum},#{areaCode},#{floor})
+	</insert>
+
+	<update id = "update">
+		update aptdeal
+		set 거래금액=#{price_deal},건축년도=#{buildYear},전용면적=#{exclusivePrivateArea},지번=#{jiNum},지역코드=#{areaCode},
+		where 법정동=#{dong} and 아파트=#{aptName} and 년=#{deal_year} and 월=#{deal_month} and 일=#{deal_day} and 층=#{floor}
+	</update>
+	
+ 	<delete id="delete">
+		delete from aptdeal
+		where 아파트=#{name}
+	</delete>
+	
+	<select id ="selectbyName" resultType="AptDealDto">
+		select `거래금액` as price_deal, `건축년도` as buildYear, `법정동` as dong, `아파트` as aptName, `년` as deal_year, `월` as deal_month,
+		`일` as deal_day, `전용면적` as exclusivePrivateArea, `지번` as jiNum, `지역코드` as areaCode, `층` as floor 
+		from aptdeal
+		where 아파트 LIKE CONCAT('%',#{name},'%')
+	</select>
+	
+	<select id ="select" resultType="AptDealDto">
+		select `거래금액` as price_deal, `건축년도` as buildYear, `법정동` as dong, `아파트` as aptName, `년` as deal_year, `월` as deal_month,
+		`일` as deal_day, `전용면적` as exclusivePrivateArea, `지번` as jiNum, `지역코드` as areaCode, `층` as floor
+		from aptdeal
+		where 지역코드=#{areaCode} and 법정동=#{dong}
+	</select>
+ 
+	<select id ="selectAll" resultType="AptDealDto">
+		select `거래금액` as price_deal, `건축년도` as buildYear, `법정동` as dong, `아파트` as aptName, `년` as deal_year, `월` as deal_month,
+		`일` as deal_day, `전용면적` as exclusivePrivateArea, `지번` as jiNum, `지역코드` as areaCode, `층` as floor from aptdeal;
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="getSido" resultType="sidoGugunCodeDto">
+		select left(sidoCode,2) sidoCode, sidoName
+		from sidocode
+		order by sidoCode
+	</select>
+	
+	<select id="getGugunInSido" parameterType="string" resultType="sidoGugunCodeDto">
+		select left(gugunCode,5) gugunCode, gugunName
+		from guguncode
+		where left(gugunCode,2) = #{sido}
+		order by gugunCode
+	</select>
+	
+	<select id="getDongInGugun" resultType="sidoGugunCodeDto">
+		select distinct dongName, dongCode
+		from baseaddress
+		where gugunName = #{gugunName} and sidoName = #{sidoName}
+		order by dongName
+
+	</select>
+	
+	
+	
+	
+	
+</mapper>

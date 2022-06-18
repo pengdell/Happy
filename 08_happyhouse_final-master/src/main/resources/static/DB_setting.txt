@@ -1,0 +1,187 @@
+-- MySQL Workbench Forward Engineering
+drop schema if exists `happyhouse`;
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema happyhouse
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema happyhouse
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `happyhouse` DEFAULT CHARACTER SET utf8 ;
+USE `happyhouse` ;
+
+-- -----------------------------------------------------
+-- Table `happyhouse`.`AptDeal`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `happyhouse`.`AptDeal` (
+  `거래금액` INT NOT NULL,
+  `건축년도` INT NOT NULL,
+  `법정동` VARCHAR(45) NOT NULL,
+  `아파트` VARCHAR(45) NOT NULL,
+  `년` INT NOT NULL,
+  `월` INT NOT NULL,
+  `일` INT NOT NULL,
+  `전용면적` VARCHAR(45) NOT NULL,
+  `지번` VARCHAR(45) NOT NULL,
+  `지역코드` VARCHAR(45) NOT NULL,
+  `층` INT NOT NULL,
+  PRIMARY KEY (`거래금액`,`건축년도`,`전용면적`,`지번`,`지역코드`, `법정동`, `아파트`, `월`, `년`, `일`, `층`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `happyhouse`.`AptRent`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `happyhouse`.`AptRent` (
+  `보증금액` INT NOT NULL,
+  `월세금액` INT NOT NULL,
+  `건축년도` INT NOT NULL,
+  `법정동` VARCHAR(45) NOT NULL,
+  `아파트` VARCHAR(45) NOT NULL,
+  `년` INT NOT NULL,
+  `월` INT NOT NULL,
+  `일` INT NOT NULL,
+  `전용면적` VARCHAR(45) NOT NULL,
+  `지번` VARCHAR(45) NOT NULL,
+  `지역코드` VARCHAR(45) NOT NULL,
+  `층` INT NOT NULL,
+  PRIMARY KEY (`보증금액`,`월세금액`,`건축년도`,`전용면적`,`지번`,`지역코드`, `년`, `월`, `일`, `법정동`, `아파트`, `층`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `happyhouse`.`HouseDeal`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `happyhouse`.`HouseDeal` (
+  `거래금액` INT NOT NULL,
+  `건축년도` INT NOT NULL,
+  `법정동` VARCHAR(45) NOT NULL,
+  `연립다세대` VARCHAR(45) NOT NULL,
+  `년` INT NOT NULL,
+  `월` INT NOT NULL,
+  `일` INT NOT NULL,
+  `전용면적` VARCHAR(45) NOT NULL,
+  `대지권면적` VARCHAR(45) NOT NULL,
+  `지번` VARCHAR(45) NOT NULL,
+  `지역코드` VARCHAR(45) NOT NULL,
+  `층` INT NOT NULL,
+  PRIMARY KEY (`거래금액`,`건축년도`,`전용면적`,`대지권면적`,`지번`,`지역코드`, `년`, `월`, `일`, `연립다세대`, `법정동`, `층`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `happyhouse`.`HouseRent`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `happyhouse`.`HouseRent` (
+  `보증금액` INT NOT NULL,
+  `월세금액` INT NOT NULL,
+  `건축년도` INT NOT NULL,
+  `법정동` VARCHAR(45) NOT NULL,
+  `연립다세대` VARCHAR(45) NOT NULL,
+  `년` INT NOT NULL,
+  `월` INT NOT NULL,
+  `일` INT NOT NULL,
+  `전용면적` VARCHAR(45) NOT NULL,
+  `지번` VARCHAR(45) NOT NULL,
+  `지역코드` VARCHAR(45) NOT NULL,
+  `층` INT NOT NULL,
+  PRIMARY KEY (`보증금액`,`월세금액`,`건축년도`,`전용면적`,`지번`,`지역코드`,`층`, `법정동`, `연립다세대`, `년`, `월`, `일`))
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Table `happyhouse`.`interest`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `happyhouse`.`interest` (
+  `id` VARCHAR(20) NOT NULL,
+  `areaCode` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id`, `areaCode`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+
+-- -----------------------------------------------------
+-- Table `happyhouse`.`user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `happyhouse`.`user` (
+  `id` VARCHAR(20) NOT NULL,
+  `pw` VARCHAR(20) NOT NULL,
+  `name` VARCHAR(10) NOT NULL,
+  `address` VARCHAR(50) NOT NULL,
+  `phone` VARCHAR(13) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+select * from aptdeal;
+select * from housedeal;
+select * from aptrent;
+select * from houserent;
+
+
+use happyhouse;
+
+CREATE TABLE `answer` (
+  `no` int NOT NULL AUTO_INCREMENT,
+  `boardno` int,
+  `userid` varchar(20) NOT NULL,
+  `content` varchar(2000) NOT NULL,
+  `regtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`no`)
+  );
+  
+insert into answer(boardno, userid, content) 
+values(4, 'ssafy', '답은'), 
+      (4, 'meme', '이고에용'),
+      (4, 'haha', 'ㅎㅎ');
+      
+      select *
+		from answer
+		where boardno=4
+		order by regtime;
+ 
+commit;
+select * from answer;
+
+
+use happyhouse;
+
+CREATE TABLE `board` (
+  `no` int NOT NULL AUTO_INCREMENT,
+  `userid` varchar(20) NOT NULL,
+  `subject` varchar(100) NOT NULL,
+  `content` varchar(2000) NOT NULL,
+  `regtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`no`)
+); 
+
+insert into board(userid, subject, content) 
+values('ssafy', 'Vue Axios 연동', 'Vue를 이용한 HTTP 통신'), 
+      ('ssafy', 'Vue를 배워봅시다', 'Vue와 Spring을 연동하자~'),
+      ('ssafy', '프론트엔드 프레임워크', 'Vue는 프론트엔드의 인기있는 프레임워크 입니다.');
+
+commit;
+select * from board;
+
+
+create table interest(
+    id varchar(30) not null,
+    gugunCode varchar(30),
+    dongName varchar(30)
+);
+

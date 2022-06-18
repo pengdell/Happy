@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssafy.happyhouse.dao.User">
+
+	<insert id="insert">
+		insert into user (id, pw, name, address,phone)
+		values (#{id},#{pw},#{name},#{address},#{phone})
+	</insert>
+
+	<update id="update">
+		update user
+		set pw=#{pw}, name=#{name},
+		address=#{address}, phone=#{phone}
+		where id=#{id}
+	</update>
+
+	<delete id="delete">
+		delete from user
+		where id=#{id}
+	</delete>
+
+	<select id="select" resultType="UserDto">
+		select *
+		from user
+		where id=#{id} and pw =#{pw}
+	</select>
+	
+	<!-- 관심지역 -->
+
+	<insert id="insertInterest">
+		insert into interest (id, gugunCode, dongName)
+		values (#{id},#{gugunCode},#{dongName})
+	</insert>
+	
+	<delete id="deleteInterest">
+	delete from interest
+		where id=#{id} and dongName=#{dongName}
+	</delete>
+	
+	<select id="selectInterest" resultType="InterestDto">
+		select * from interest
+		where id=#{id}
+	</select>
+	
+</mapper>
+
